@@ -152,13 +152,28 @@ def save_results(closest_pair, min_distance, merges, comments, output_dir):
     df = pd.DataFrame(merges)
     df.to_csv(f"{output_dir}/cluster_merges.csv", index=False, encoding='utf-8')
     
-    with open(f"{output_dir}/cluster_merges.txt", 'w', encoding='utf-8') as f:
-        f.write(f"クラスタ併合情報（最初の{len(merges)}件）:\n\n")
+    with open(f"{output_dir}/cluster_merges.md", 'w', encoding='utf-8') as f:
+        f.write(f"# クラスタ併合情報（最初の{len(merges)}件）\n\n")
         for merge in merges:
-            f.write(f"併合 #{merge['index'] + 1} （距離: {merge['distance']:.6f}）:\n")
-            f.write(f"  テキスト1: {merge['text1'][:200]}{'...' if len(merge['text1']) > 200 else ''}\n")
-            f.write(f"  テキスト2: {merge['text2'][:200]}{'...' if len(merge['text2']) > 200 else ''}\n")
-            f.write("\n")
+            new_cluster_id = len(comments) + merge['index']
+            f.write(f"## 併合 #{merge['index'] + 1} （距離: {merge['distance']:.6f}）\n\n")
+            f.write(f"**作成されたクラスタID**: {new_cluster_id}\n\n")
+            
+            if merge['id1'] < len(comments):
+                f.write(f"### テキスト1 (ID: {merge['id1']})\n\n")
+                f.write(f"{merge['text1']}\n\n")
+            else:
+                f.write(f"### クラスタ1 (ID: {merge['id1']})\n\n")
+                f.write(f"{merge['text1']}\n\n")
+            
+            if merge['id2'] < len(comments):
+                f.write(f"### テキスト2 (ID: {merge['id2']})\n\n")
+                f.write(f"{merge['text2']}\n\n")
+            else:
+                f.write(f"### クラスタ2 (ID: {merge['id2']})\n\n")
+                f.write(f"{merge['text2']}\n\n")
+            
+            f.write("---\n\n")
 
 def main():
     comments, ids = load_data(CSV_PATH)
