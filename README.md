@@ -111,3 +111,4 @@ API費用のかからないローカルのembeddingモデルと、凝集クラ�
 
 - [kouchou-ai/experimental/embvec_reduce_public_comment/](https://github.com/nishio/kouchou-ai/tree/main/experimental/embvec_reduce_public_comment): 参考にした実装
 - 謝辞: 中山心太(tokoroten)氏による"SentenceTransformerによる埋め込みベクトル生成"実装を活用しています。
+- この研究は[デジタル民主主義2030](https://dd2030.org/)プロジェクトにおける議論から生まれました。興味がある方はぜひSlackにご参加ください。
