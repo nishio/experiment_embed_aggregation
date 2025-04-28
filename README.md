@@ -9,7 +9,8 @@
 1. **データ処理**
    - aipubcom_comments.csvから「comment」カラムを抽出
    - 重複テキストを除去して一意のコメントのみを処理
-   - 結果: 111,514件の総コメントから6,966件の一意のコメントを抽出
+   - 結果: 6,994件の総コメントから6,966件の一意のコメントを抽出
+   - 注: CSVファイルは111,514行ありますが、実際のコメント行数は6,994件です
 
 2. **埋め込みベクトル生成**
    - モデル: `sentence-transformers/paraphrase-multilingual-mpnet-base-v2`
@@ -45,8 +46,9 @@
 
 距離が0.001未満の非常に類似したテキストペアが複数存在することを確認しました：
 
-1. **距離: 0.000000** - 完全に同一のテキスト
-   - 30条の4に関する長文の法的議論（2つの同一テキスト）
+1. **距離: 0.000000** - クラスタリング時に検出された同一テキスト
+   - 30条の4に関する長文の法的議論（ID: 4357）
+   - 注: 重複除去処理後もクラスタリングアルゴリズムが距離0のペアを検出しました。これは同一テキストが異なるIDで存在する可能性を示唆しています。
 
 2. **距離: 0.000086** - ほぼ同一のテキスト
    - 生成AIの不当利用に関する懸念を列挙したテキスト（ID番号のみ異なる）
@@ -66,7 +68,8 @@
 - `aipubcom_clustering/aipubcom_embedding_clustering.py`: 実装したスクリプト
 - `aipubcom_clustering/closest_pair.txt`: 最も近いペアの情報
 - `aipubcom_clustering/cluster_merges.csv`: クラスタ併合情報（CSV形式）
-- `aipubcom_clustering/cluster_merges.txt`: クラスタ併合情報（テキスト形式）
+- `aipubcom_clustering/cluster_merges.md`: クラスタ併合情報（Markdown形式）
+- `aipubcom_clustering/cluster_merges.txt`: クラスタ併合情報（テキスト形式、旧バージョン）
 
 ## 技術的詳細
 
